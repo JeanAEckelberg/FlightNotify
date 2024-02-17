@@ -3,7 +3,9 @@ This file contains the configuration for the app
 """
 
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+
+from utils.path_factory import make_path
 
 
 @dataclass
@@ -14,3 +16,4 @@ class Config:
     EMAIL_ADDRESS: str
     EMAIL_PASSWORD: str
     URL: str
+    PATH: [str] = field(default_factory=make_path)

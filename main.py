@@ -30,7 +30,7 @@ def main_loop_job(state: State, config: Config) -> None:
     :param config: the configuration of the application
     :return: None
     """
-    arrive_time: str = get_time_of_flight_arrival(config.URL)
+    arrive_time: str = get_time_of_flight_arrival(config.URL, config.PATH)
     if state.FLIGHT_ARRIVAL_TIME != arrive_time:
         state.FLIGHT_ARRIVAL_TIME = arrive_time
         send_email(f"Flight arrival time: {arrive_time}", config.EMAIL_ADDRESS, config.EMAIL_PASSWORD)
@@ -40,7 +40,7 @@ if __name__ == "__main__":
     state: State = State("")
     config: Config = load_config()
     with_args = lambda: main_loop_job(state, config)
-    schedule.every(10).minutes.until(datetime.fromisoformat("20240217T17")).do(with_args)
+    schedule.every().minutes.until(datetime.fromisoformat("20240217T17")).do(with_args)
 
     while 1:
         n = schedule.idle_seconds()

@@ -23,7 +23,7 @@ def get_flight_page(url: str) -> str:
     return html
 
 
-def get_time_of_flight_arrival(url: str) -> str:
+def get_time_of_flight_arrival(url: str, path: [str]) -> str:
     """
     Parse html for the flight arrival time
     :param url: url of the flight page
@@ -31,7 +31,9 @@ def get_time_of_flight_arrival(url: str) -> str:
     """
     html = get_flight_page(url)
     doc: BeautifulSoup = BeautifulSoup(html, "html.parser")
-    destination_info: Tag = doc.find(class_="destination-summary")
-    arrival_time: str = destination_info.find(class_="time-container estimated-time ac-font-bold").text
-    arrival_time = arrival_time.strip()
+    temp: Tag = doc
+    for cls in path:
+        temp = temp.find(class_=cls)
+
+    arrival_time: str = temp.text.strip()
     return arrival_time
