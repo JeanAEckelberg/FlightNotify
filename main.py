@@ -40,7 +40,7 @@ if __name__ == "__main__":
     state: State = State("")
     config: Config = load_config()
     with_args = lambda: main_loop_job(state, config)
-    schedule.every().minutes.until(datetime.fromisoformat("20240217T17")).do(with_args)
+    schedule.every(10).minutes.until(datetime.fromisoformat("20240217T17")).do(with_args)
 
     while 1:
         n = schedule.idle_seconds()
